@@ -1,4 +1,5 @@
-// import type { Core } from '@strapi/strapi';
+import type { Core } from '@strapi/strapi';
+import bannedWordValidation from './api/review/middlewares/banned-word-validation';
 
 export default {
   /**
@@ -7,7 +8,10 @@ export default {
    *
    * This gives you an opportunity to extend code.
    */
-  register(/* { strapi }: { strapi: Core.Strapi } */) {},
+  register({ strapi }: { strapi: Core.Strapi }) {
+    // Register Document Service Middleware globally
+    strapi.documents.use(bannedWordValidation({}, { strapi }));
+  },
 
   /**
    * An asynchronous bootstrap function that runs before

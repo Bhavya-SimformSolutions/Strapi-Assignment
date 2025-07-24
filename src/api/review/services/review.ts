@@ -1,5 +1,5 @@
 /**
- * Review service - validation is handled by lifecycle hooks
+ * Review service - validation is handled by Document Service Middleware
  */
 
 import { factories } from '@strapi/strapi';
