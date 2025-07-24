@@ -24,4 +24,10 @@ export default ({ env }) => ({
       },
     },
   },
+  
+  // Review Moderation Plugin
+  'review-moderation': {
+    enabled: true,
+    resolve: './src/plugins/review-moderation'
+  },
 });
