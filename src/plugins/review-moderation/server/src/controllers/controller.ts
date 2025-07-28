@@ -3,11 +3,11 @@ import type { Core } from '@strapi/strapi';
 const controller = ({ strapi }: { strapi: Core.Strapi }) => ({
   /**
    * Get all reviews for moderation
-   * This is like a GET endpoint in Angular HTTP service
+   * Updated to use Document Service but maintains backward compatibility
    */
   async getAllReviews(ctx) {
     try {
-      // Call our service to get reviews
+      // Call our service to get reviews (now includes all reviews like before)
       const reviews = await strapi
         .plugin('review-moderation')
         .service('reviewService')
@@ -66,6 +66,27 @@ const controller = ({ strapi }: { strapi: Core.Strapi }) => ({
     } catch (error) {
       console.error('Error rejecting review:', error);
       ctx.throw(500, 'Failed to reject review');
+    }
+  },
+
+  /**
+   * Get review statistics for dashboard
+   * Provides counts for total, approved, and pending reviews
+   */
+  async getReviewStats(ctx) {
+    try {
+      const stats = await strapi
+        .plugin('review-moderation')
+        .service('reviewService')
+        .getReviewStats();
+      
+      ctx.body = {
+        data: stats,
+        message: 'Review statistics fetched successfully'
+      };
+    } catch (error) {
+      console.error('Error fetching review stats:', error);
+      ctx.throw(500, 'Failed to fetch review statistics');
     }
   },
 });

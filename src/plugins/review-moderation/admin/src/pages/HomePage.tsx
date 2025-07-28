@@ -22,11 +22,10 @@ import { CheckCircle, Trash } from '@strapi/icons';
 import { useIntl } from 'react-intl';
 import { Page, useAPIErrorHandler, useFetchClient } from '@strapi/strapi/admin';
 
-import { getTranslation } from '../utils/getTranslation';
-
 // Define TypeScript interfaces (like Angular interfaces)
 interface Review {
   id: number;
+  documentId: string; // Add documentId for Document Service
   reviewer_name: string;
   comment: string;
   rating: number;
@@ -81,7 +80,7 @@ const HomePage = () => {
    * Approve a review
    * Like an Angular click handler method
    */
-  const handleApprove = async (reviewId: number) => {
+  const handleApprove = async (reviewId: string) => {
     try {
       // Use Strapi's authenticated fetch client
       await put(`/review-moderation/reviews/${reviewId}/approve`);
@@ -100,7 +99,7 @@ const HomePage = () => {
    * Reject a review
    * Like an Angular click handler method
    */
-  const handleReject = async (reviewId: number) => {
+  const handleReject = async (reviewId: string) => {
     try {
       // Use Strapi's authenticated fetch client
       await put(`/review-moderation/reviews/${reviewId}/reject`);
@@ -209,7 +208,7 @@ const HomePage = () => {
                         size="S"
                         variant="success"
                         startIcon={<CheckCircle />}
-                        onClick={() => handleApprove(review.id)}
+                        onClick={() => handleApprove(review.documentId)}
                       >
                         Approve
                       </Button>
@@ -220,7 +219,7 @@ const HomePage = () => {
                         size="S"
                         variant="danger"
                         startIcon={<Trash />}
-                        onClick={() => handleReject(review.id)}
+                        onClick={() => handleReject(review.documentId)}
                       >
                         Reject
                       </Button>

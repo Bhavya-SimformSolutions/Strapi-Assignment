@@ -30,4 +30,22 @@ export default ({ env }) => ({
     enabled: true,
     resolve: './src/plugins/review-moderation'
   },
+  
+  // Documentation Plugin
+  documentation: {
+    enabled: true,
+    config: {
+      openapi: '3.0.0',
+      info: {
+        version: '1.0.0',
+        title: 'Product Catalog API Documentation',
+        description: 'API documentation for the Product Catalog CMS',
+      },
+      'x-strapi-config': {
+        path: '/documentation',
+        showGeneratedFiles: true,
+        generateDefaultResponse: true,
+      },
+    },
+  },
 });
